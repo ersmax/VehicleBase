@@ -40,13 +40,10 @@ public class StartVehicle {
 	 * @return the ENUM associated with the operation
 	 */
 	private Operation getOperation(String operation) {
-		// Prevents a Null Pointer Exception later
-		if (operation == null || operation.trim().isEmpty()) {
-			throw new CustomException("Missing operation");
-		}
-
 		try {
 			return Operation.valueOf(operation.trim().toUpperCase());
+		} catch (NullPointerException e) {
+			throw new CustomException("Missing operation");
 		} catch (IllegalArgumentException e) {
 			throw new CustomException("Invalid operation: '" + operation + "'");
 		}
