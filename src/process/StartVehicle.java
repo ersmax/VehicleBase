@@ -17,7 +17,7 @@ public class StartVehicle {
 
 	public void execute(List<String> parameters) {
 		// decode row by row the parameters
-		// eseguire i diversi servizi
+		// then execute the services
 
 		int row = 0;
 		for (String item : parameters) {

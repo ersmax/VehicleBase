@@ -5,7 +5,7 @@ import java.util.List;
 
 import process.StartVehicle;
 
-public class MainVeicoli {
+public class MainVehicles {
 
 	/** 
 	 * Parsing parameters
