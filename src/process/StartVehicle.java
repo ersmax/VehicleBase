@@ -35,9 +35,9 @@ public class StartVehicle {
 	}
 
 	/**
-	 * Converts the String to an Operation, or throws CustomException
-	 * @param operation is the first parameter
-	 * @return the ENUM associated with the operation
+	 * Transform the String parameter into enum
+	 * @param operation	: the operation passed as a string
+	 * @return			: the Enum of the operation
 	 */
 	private Operation getOperation(String operation) {
 		try {
@@ -63,8 +63,7 @@ public class StartVehicle {
 				listVehicles.listVehicle();
 				break;
 			default:
-				// unknown operation
-				throw new CustomException("Operation not supported: " + listItem[0]);
+				throw new CustomException("Operation not supported: " + operation.toString());
 		}
 	}
 
