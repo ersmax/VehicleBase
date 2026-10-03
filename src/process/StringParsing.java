@@ -25,17 +25,16 @@ public class StringParsing {
 	/**
 	 * Turns the array items (e.g. color=yellow) into a pair Key-Value
 	 * @param items	: the array of items to be transformed into Key-Value pairs
-	 * @param start	: the starting position should be after operation and vehicle type
 	 * @return		: the map of key-value attributes for each vehicle 
 	 */
-	public static Map<String, String> mapKeyValue(String[] items, int start) {
+	public static Map<String, String> mapKeyValue(String[] items) {
 		Map<String, String> map = new HashMap<>();
 		
-		for (int idx = start; idx < items.length; idx++) {
-			String[] pair = items[idx].split("=", 2);
+		for (String item : items) {
+			String[] pair = item.split("=", 2);
 			if (pair.length < 2)
 				throw new CustomException("Invalid parameter (expected Key=value). "
-										+ "Found instead: '" + items[idx] + "'");
+										+ "Found instead: '" + item + "'");
 			
 			String key = pair[0].trim().toLowerCase();
 			String value = pair[1].trim();

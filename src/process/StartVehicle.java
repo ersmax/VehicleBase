@@ -12,8 +12,6 @@ public class StartVehicle {
 	public final static int OPERATION = 0;
 	public final static int VEHICLE = 1;
 	public final static int PARAMS = 2;
-	
-	private ListImplementation listVehicles = new ListImplementation();
 
 	public void execute(List<String> parameters) {
 		// decode row by row the parameters
@@ -57,10 +55,10 @@ public class StartVehicle {
 	private void handleOperation(Operation operation, String[] listItem) {
 		switch (operation) {
 			case ADD:
-				listVehicles.addVehicle(listItem);
+				new ListImplementation().addVehicle(listItem);
 				break;
 			case LIST:
-				listVehicles.listVehicle();
+				new ListImplementation().listVehicle();
 				break;
 			default:
 				throw new CustomException("Operation not supported: " + operation.toString());

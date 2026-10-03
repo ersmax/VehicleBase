@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import exception.CustomException;
@@ -11,7 +12,8 @@ import singleton.VehicleRegistry;
 public class ListImplementation {
 
 	/**
-	 * Dispatch to the correct class type
+	 * Dispatch to the correct class type,
+	 * and parse the parameters of the vehicle
 	 * @param listItem is the single string of items
 	 */
 	public void addVehicle(String[] listItem) {
@@ -19,20 +21,17 @@ public class ListImplementation {
 			throw new CustomException("Missing vehicle type");
 		}
 		
-		Map<String, String> params = StringParsing.mapKeyValue(listItem, StartVehicle.PARAMS);
+		String[] normalizedListItems = Arrays.copyOfRange(listItem, StartVehicle.PARAMS, listItem.length); 
+		Map<String, String> params = StringParsing.mapKeyValue(normalizedListItems);
 
 		switch(listItem[StartVehicle.VEHICLE].toLowerCase()) {
-			case "car":
-			case "macchina":
+			case "car", "macchina":
 				new CarImplementation().add(params);
 				break;
-			case "moto":
-			case "bike":
+			case "moto", "bike":
 				new BikeImplementation().add(params);
 				break;
-			case "bicicletta":
-			case "bici":
-			case "bicycle":
+			case "bicicletta", "bici", "bicycle":
 				new BicycleImplementation().add(params);
 				break;
 			default:
