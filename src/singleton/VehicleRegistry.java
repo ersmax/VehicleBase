@@ -23,9 +23,8 @@ public class VehicleRegistry {
 	}
 
 	public static VehicleRegistry getSingleton() {
-		if (instance == null) {
+		if (instance == null)
 			instance = new VehicleRegistry();
-		}
 		return instance;
 	}
 
@@ -34,38 +33,19 @@ public class VehicleRegistry {
 	 * @param vehicle 	: vehicle to save
 	 * @param plate		: the plate, or null for vehicles without one (bicycles)
 	 */
-	public void add(Vehicles vehicle, String plate) {
-		String cleanedPlate = null;
-		
+	public void add(Vehicles vehicle, String plate) {		
 		// Null plate is for bicycles
 		if (plate != null) {	
-			cleanedPlate = plate.trim().toUpperCase();
-			if (cleanedPlate.isEmpty())
-				throw new CustomException("Plate cannot be empty");
-		}
-		
-		
-		Vehicles existing = vehiclesByPlate.get(cleanedPlate);
-		if (existing != null)
-			throw new CustomException("Plate " + cleanedPlate 
-									+ " already used by vehicle id: " + existing.getId());
-		
+			Vehicles existing = vehiclesByPlate.get(plate);
+			if (existing != null)
+				throw new CustomException("Plate " + plate 
+						+ " already used by vehicle id: " + existing.getId());
+		}	
 		vehicle.setId(nextId++);
 		vehicles.add(vehicle);
 		
-		if (cleanedPlate != null)
-			vehiclesByPlate.put(cleanedPlate, vehicle);
-	}
-	
-	/**
-	 * Find a vehicle by plate.
-	 * @param plate : the plate passed in raw format
-	 * @return		: the vehicle whose plate belongs to 
-	 */
-	public Vehicles findByPlate(String plate) {
-		if (plate == null)
-			return null;
-		return vehiclesByPlate.get(plate.trim().toUpperCase());
+		if (plate != null)
+			vehiclesByPlate.put(plate, vehicle);
 	}
 
 	public List<Vehicles> getVehicles() {

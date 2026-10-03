@@ -9,13 +9,15 @@ import utils.Validation;
 
 public class BicycleImplementation extends VehicleAbstract {
 
+	public static final String[] SUSPENSIONS = {"con", "senza"};
+	
 	@Override
 	public void add(Map<String, String> parameters) {
 		Bicycle bicycle = new Bicycle();
-		fillProperties(bicycle, "bici", parameters);
+		VehicleAbstract.fillProperties(bicycle, "bici", parameters);
 		bicycle.setFoldable(Validation.getBool(parameters, "pieghevole"));
-		bicycle.setNumberGears(Validation.getIntInRange(parameters, "marce", 1, 30));
-		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "sospensione", Validation.SUSPENSIONS));
+		bicycle.setNumberGears(Validation.getIntInRange(parameters, "marce", 1, 100));
+		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "sospensione", SUSPENSIONS));
 		
 		if (bicycle.getNumberWheels() != 2)
 			throw new CustomException("A bicycle must have 2 wheels");

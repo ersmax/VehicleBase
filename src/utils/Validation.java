@@ -8,16 +8,6 @@ import exception.CustomException;
 
 public class Validation {
 	
-	public static final String[] FUEL_TYPES  = {"benzina", "diesel", "gpl", "metano", "elettrica", "ibrida", "manuale"};
-	public static final String[] CATEGORIES  = {"strada", "citycar", "utilitaria", "berlina", "suv", "sportiva", "fuoristrada", "corsa"};
-	public static final String[] COLORS      = {"bianco", "nero", "grigio", "argento", "rosso", "blu", "verde", "giallo", "arancione", "marrone"};
-	public static final String[] SUSPENSIONS = {"con", "senza"};
-
-	// formats: car AA123AA, motorbike AA12345
-	public static final String CAR_PLATE  = "[A-Z]{2}[0-9]{3}[A-Z]{2}";
-	public static final String BIKE_PLATE = "[A-Z]{2}[0-9]{5}";
-	
-	
 	/**
 	 * @param map	: the map of attribute and value
 	 * @param key	: the key we are searching
@@ -49,13 +39,9 @@ public class Validation {
 	public static boolean getBool(Map<String, String> map, String key) {
 		String value = getString(map, key).toLowerCase();
 		switch (value) {
-			case "si":
-			case "sì":
-			case "yes":
-			case "true":
+			case "si", "sì", "yes", "true":
 				return true;
-			case "no":
-			case "false":
+			case "no", "false":
 				return false;
 			default:
 				throw new CustomException("Parameter " + key + " must be si/no. "
@@ -84,13 +70,6 @@ public class Validation {
 			throw new CustomException("Parameter " + key + " must be between " + min + " and " + max
 									+ ". Found instead a value (" + value + ")");
 		return value;
-	}
-
-	/**
-	 * A year cannot be in the future (1886 first car)
-	 */
-	public static Integer getYear(Map<String, String> map, String key) {
-		return getIntInRange(map, key, 1886, Year.now().getValue());
 	}
 
 	/**
