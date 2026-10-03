@@ -27,10 +27,7 @@ public class MainVehicles {
 	
 	/**
 	 * "Check validity of parameters value" (alim, cat) is the one instruction not covered yet. 
-	 * Right now alim=banana is accepted. 
-	 * A getOneOf(map, key, "benzina", "diesel", ...) helper in Validation would cover it. 
-	 * You could also check rules per type, such as a bicycle having alim=manuale.
-	 * 
+	 * eg. alim=banana may not be accepted.  
 	 */
 	
 		
