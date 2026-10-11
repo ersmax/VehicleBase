@@ -13,8 +13,8 @@ public class VehicleRegistry {
 
 	private static VehicleRegistry instance = null;
 
-	private List<Vehicles> vehicles = new ArrayList<>();
-	private Map<String, Vehicles> vehiclesByPlate = new HashMap<>();
+	private final List<Vehicles> vehicles = new ArrayList<>();
+	private final Map<String, Vehicles> vehiclesByPlate = new HashMap<>();
 	private int nextId = 1;
 
 
@@ -48,7 +48,7 @@ public class VehicleRegistry {
 			vehiclesByPlate.put(plate, vehicle);
 	}
 
-	public List<Vehicles> getVehicles() {
+	public List<Vehicles> getVehicleRegistry() {
 		return Collections.unmodifiableList(vehicles);
 	}
 }

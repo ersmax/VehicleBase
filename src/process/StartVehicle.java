@@ -1,35 +1,58 @@
 package process;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import enums.Operation;
 import exception.CustomException;
+import lombok.extern.slf4j.Slf4j;
 import services.ListImplementation;
+import utils.FileManager;
+import vehicles.MainVehicles;
 
-
+@Slf4j
 public class StartVehicle {
 
 	public final static int OPERATION = 0;
 	public final static int VEHICLE = 1;
 	public final static int PARAMS = 2;
+	
+	// one instance of service for all rows
+	private static final ListImplementation service = new ListImplementation();
 
-	public void execute(List<String> parameters) {
-		// decode row by row the parameters
-		// then execute the services
-
-		int row = 0;
-		for (String item : parameters) {
-			row++;
+	/**
+	 * Clear writing file, Read rows and process each single row
+	 */
+	public void execute() {
+		
+		try {
+			FileManager.writeFile(MainVehicles.OUTPUT_FILE, new ArrayList<>(), false);
+			List<String> rows = FileManager.readFile(MainVehicles.INPUT_FILE);
+			processRows(rows);			
+		} catch (IOException e) {
+			log.error("Error reading the input file: {}", e.getMessage());
+		}	
+	}
+	
+	/**
+	 * Decode the elements list, row by row,
+	 * get the operation (COMMAND), 
+	 * then execute each service 
+	 * @throws IOException 
+	 */
+	private void processRows(List<String> rows) throws IOException {
+		int idxRow = 0;
+		for (String row : rows) {
+			idxRow++;
 			try {
-				String[] listItem = StringParsing.parsing(item);
-				Operation operation = getOperation(listItem[OPERATION]);
-				handleOperation(operation, listItem);
-
+				String[] elementsRow = StringParsing.rowParser(row);
+				Operation operation = getOperation(elementsRow[OPERATION]);
+				handleOperation(operation, elementsRow);
 			} catch (CustomException e) {
-				System.err.println("Row " + row + " skipped: " + e.getMessage());
-			}
+				log.error("Row {} not added due to: {}", idxRow, e.getMessage());
+			} 
 		}
-
 	}
 
 	/**
@@ -48,17 +71,19 @@ public class StartVehicle {
 	}
 
 	/**
-	 * Dispatch to the proper operation
-	 * @param operation is adding or listing
-	 * @param listItem to show the items
+	 * Dispatch to the correct operation handling (etc addVehicle), or handle errors.
+	 * The operation is in ListImplementation
+	 * @param operation			: the operation code in Enum format
+	 * @param parametersList	: the list of parameters in a row
+	 * @throws IOException 
 	 */
-	private void handleOperation(Operation operation, String[] listItem) {
+	private void handleOperation(Operation operation, String[] parametersList) throws IOException {
 		switch (operation) {
 			case ADD:
-				new ListImplementation().addVehicle(listItem);
+				service.addVehicle(parametersList);
 				break;
 			case LIST:
-				new ListImplementation().listVehicle();
+				service.listVehicle(parametersList);
 				break;
 			default:
 				throw new CustomException("Operation not supported: " + operation.toString());

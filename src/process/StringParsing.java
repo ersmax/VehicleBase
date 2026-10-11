@@ -1,5 +1,6 @@
 package process;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,18 +9,14 @@ import exception.CustomException;
 public class StringParsing {
 
 	/**
-	 * Parse the string elements separated by comma into array elements
-	 * @param parameters : the whole string 
-	 * @return			 : an array with elements and no "," between them
+	 * Separate a string of elements, using "," as separator 
+	 * @param row	: a single row of elements
+	 * @return		: an array of String elements 
 	 */
-	public static String[] parsing(String parameters) {			
-		String[] result = parameters.split(",");
-		
-		int idx = 0;
-		for (String item : result)
-			result[idx++] = item.trim();
-	
-		return result;
+	public static String[] rowParser(String row) {				
+		return Arrays.stream(row.split(","))
+					 .map(String::trim)
+					 .toArray(String[]::new);
 	}
 	
 	/**
