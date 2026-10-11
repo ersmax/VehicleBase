@@ -1,6 +1,7 @@
 package services;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Map;
 
 import models.Vehicles;
@@ -8,9 +9,9 @@ import utils.Validation;
 
 public abstract class VehicleAbstract {
 		
-	public static final String[] FUEL_TYPES  = {"benzina", "diesel", "gpl", "metano", "elettrica", "ibrida", "manuale"};
-	public static final String[] CATEGORIES  = {"strada", "citycar", "utilitaria", "berlina", "suv", "sportiva", "fuoristrada", "corsa"};
-	public static final String[] COLORS      = {"bianco", "nero", "grigio", "argento", "rosso", "blu", "verde", "giallo", "arancione", "marrone"};
+	public static final List<String> FUEL_TYPES = List.of("benzina", "diesel", "gpl", "metano", "elettrica", "ibrida", "manuale");
+	public static final List<String> CATEGORIES = List.of("strada", "citycar", "utilitaria", "berlina", "suv", "sportiva", "fuoristrada", "corsa");
+	public static final List<String> COLORS = List.of("bianco", "nero", "grigio", "argento", "rosso", "blu", "verde", "giallo", "arancione", "marrone");
 		
 	protected static void fillProperties(Vehicles vehicle, String type, Map<String, String> parameters) {
 		

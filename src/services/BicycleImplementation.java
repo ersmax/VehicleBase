@@ -1,5 +1,6 @@
 package services;
 
+import java.util.List;
 import java.util.Map;
 
 import exception.CustomException;
@@ -9,13 +10,13 @@ import utils.Validation;
 
 public class BicycleImplementation extends VehicleAbstract {
 
-	public static final String[] SUSPENSIONS = {"con", "senza"};
+	public static final List<String> SUSPENSIONS = List.of("con", "senza");
 	
 	@Override
 	public void add(Map<String, String> parameters) {
 		Bicycle bicycle = new Bicycle();
 		VehicleAbstract.fillProperties(bicycle, "bici", parameters);
-		bicycle.setFoldable(Validation.getBool(parameters, "pieghevole"));
+		bicycle.setFoldable(Validation.getBoolean(parameters, "pieghevole"));
 		bicycle.setNumberGears(Validation.getIntInRange(parameters, "marce", 1, 100));
 		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "sospensione", SUSPENSIONS));
 		
