@@ -7,18 +7,21 @@ bicycles) in a single in-memory list.
 
     add,<type>,key=value,key=value,...
     list
+    list,key=value,key=value,...
 
 Example:
 
-    add,macchina,ruote=4,alim=benzina,cat=strada,colore=bianco,marca=fiat,anno=2025,modello=500,porte=4,targa=el234gx,cc=1200
+    add,car,wheels=4,fuel=petrol,category=road,color=white,brand=fiat,year=2025,model=500,doors=4,plate=el234gx,cc=1200
 
-Vehicle types: `macchina`, `moto`, `bici`.
+Vehicle types: `car`, `bike`, `bicycle`.
+
+Filters for `list`: `list,key=value,...` (e.g. `list,color=white,brand=fiat`).
 
 ## Packages
 
 | Package     | Contents                                    | Role |
 |-------------|---------------------------------------------|------|
-| `vehicles`  | `MainVeicoli`                               | Entry point: builds the input rows and starts the process |
+| `vehicles`  | `MainVehicles`                              | Entry point: builds the input rows and starts the process |
 | `process`   | `StartVehicle`, `StringParsing`             | Loops over the rows, reads the operation, parses strings into a key/value Map, catches errors |
 | `services`  | `ListImplementation`                        | Dispatches ADD to the right vehicle type; prints the list for LIST |
 |             | `VehicleAbstract`                           | Shared logic: fills the common fields of every vehicle |
@@ -31,22 +34,22 @@ Vehicle types: `macchina`, `moto`, `bici`.
 
 ## Flow of one row
 
-    MainVeicoli
+    MainVehicles
       └─ StartVehicle            split row, read operation, catch CustomException
            └─ ListImplementation which vehicle type? / print list
                 └─ CarImplementation (or Bike / Bicycle)
                      ├─ VehicleAbstract.fillProperties   common fields + validation
                      ├─ type-specific fields + rules     (wheels, fuel, plate...)
-                     └─ VehicleRegistry.add              unique plate check, assign id, store
+                     └─ VehicleRegistry.addVehicle       unique plate check, assign id, store
 
 ## Validation
 
-- **Numbers only:** `ruote`, `anno`, `cc`, `porte`, `marce`
-- **Allowed values:** `alim` (fuel), `cat` (category), `colore`, `sospensione`
+- **Numbers only:** `wheels`, `year`, `cc`, `doors`, `gears`
+- **Allowed values:** `fuel`, `category`, `color`, `suspension`
 - **Ranges:** year between 1886 and the current year; doors, cc and gears within limits
 - **Plates:** Italian format (car `AA123AA`, motorbike `AA12345`), unique, case-insensitive
-- **Per type:** car ≥ 3 wheels and not `manuale`; motorbike 2 wheels; bicycle 2 wheels, `manuale` or `elettrica`
-- **Booleans:** `pieghevole` accepts `si`/`no`
+- **Per type:** car ≥ 3 wheels and not `manual`; motorbike 2 wheels and not `manual`; bicycle 2 wheels, `manual` or `electric`
+- **Booleans:** `foldable` accepts `yes`/`no`
 
 ## Error handling
 

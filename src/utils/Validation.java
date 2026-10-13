@@ -30,12 +30,12 @@ public class Validation {
 	public static boolean getBoolean(Map<String, String> parameters, String key) {
 		String value = getString(parameters, key).toLowerCase();
 		switch (value) {
-		case "si", "sì", "true", "yes":
+		case "yes", "true":
 			return true;
 		case "no", "false":
 			return false;
 		default:
-			throw new CustomException("Parameter " + key + " must be si/no. "
+			throw new CustomException("Parameter " + key + " must be yes/no. "
 									+ "Found instead a value (" + value + ")");
 		}
 	}

@@ -15,16 +15,16 @@ public class BikeImplementation extends VehicleAbstract {
 	@Override
 	public void add(Map<String, String> parameters) {
 		Bike bike = new Bike();
-		VehicleAbstract.fillProperties(bike, "moto", parameters);
+		VehicleAbstract.fillProperties(bike, "bike", parameters);
 		bike.setCc(Validation.getIntInRange(parameters, "cc", 50, 2500));
-		bike.setPlate(Validation.getPlate(parameters, "targa", BIKE_PLATE));
+		bike.setPlate(Validation.getPlate(parameters, "plate", BIKE_PLATE));
 		
 		if (bike.getNumberWheels() != 2)
 			throw new CustomException("A bike must have 2 wheels");
-		if (bike.getFuelType().equalsIgnoreCase("manuale"))
+		if (bike.getFuelType().equalsIgnoreCase("manual"))
 			throw new CustomException("A bike cannot run without fuel");
 		
-		VehicleRegistry.getSingleton().add(bike, bike.getPlate());
+		VehicleRegistry.getSingleton().addVehicle(bike, bike.getPlate());
 	}
 
 }

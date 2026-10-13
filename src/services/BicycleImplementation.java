@@ -10,24 +10,24 @@ import utils.Validation;
 
 public class BicycleImplementation extends VehicleAbstract {
 
-	public static final List<String> SUSPENSIONS = List.of("con", "senza");
+	public static final List<String> SUSPENSIONS = List.of("with", "without");
 	
 	@Override
 	public void add(Map<String, String> parameters) {
 		Bicycle bicycle = new Bicycle();
-		VehicleAbstract.fillProperties(bicycle, "bici", parameters);
-		bicycle.setFoldable(Validation.getBoolean(parameters, "pieghevole"));
-		bicycle.setNumberGears(Validation.getIntInRange(parameters, "marce", 1, 100));
-		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "sospensione", SUSPENSIONS));
+		VehicleAbstract.fillProperties(bicycle, "bicycle", parameters);
+		bicycle.setFoldable(Validation.getBoolean(parameters, "foldable"));
+		bicycle.setNumberGears(Validation.getIntInRange(parameters, "gears", 1, 100));
+		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "suspension", SUSPENSIONS));
 		
 		if (bicycle.getNumberWheels() != 2)
 			throw new CustomException("A bicycle must have 2 wheels");
 		
 		String fuel = bicycle.getFuelType();
-		if (!fuel.equalsIgnoreCase("manuale") && !fuel.equalsIgnoreCase("elettrica"))
+		if (!fuel.equalsIgnoreCase("manual") && !fuel.equalsIgnoreCase("electric"))
 			throw new CustomException("A bicycle can only be electric or manual");
 		
-		VehicleRegistry.getSingleton().add(bicycle, null);
+		VehicleRegistry.getSingleton().addVehicle(bicycle, null);
 	}
 	
 
