@@ -16,19 +16,16 @@ public class BicycleImplementation extends VehicleAbstract {
 	public void add(Map<String, String> parameters) {
 		Bicycle bicycle = new Bicycle();
 		VehicleAbstract.fillProperties(bicycle, "bicycle", parameters);
-		bicycle.setFoldable(Validation.getBoolean(parameters, "foldable"));
 		bicycle.setNumberGears(Validation.getIntInRange(parameters, "gears", 1, 100));
 		bicycle.setTypeSuspensions(Validation.getOneOf(parameters, "suspension", SUSPENSIONS));
+		bicycle.setFoldable(Validation.getBoolean(parameters, "foldable"));
+		
+		if (!bicycle.getFuelType().equals("manual") && !bicycle.getFuelType().equals("electric"))
+			throw new CustomException("A bicycle can only be electric or manual");
 		
 		if (bicycle.getNumberWheels() != 2)
-			throw new CustomException("A bicycle must have 2 wheels");
-		
-		String fuel = bicycle.getFuelType();
-		if (!fuel.equalsIgnoreCase("manual") && !fuel.equalsIgnoreCase("electric"))
-			throw new CustomException("A bicycle can only be electric or manual");
+			throw new CustomException("A bicycle can have only 2 wheels");
 		
 		VehicleRegistry.getSingleton().addVehicle(bicycle, null);
 	}
-	
-
 }

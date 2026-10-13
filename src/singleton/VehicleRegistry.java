@@ -73,6 +73,37 @@ public class VehicleRegistry {
 	}
 	
 	/**
+	 * Return a vehicle by its plate (null if not found)
+	 * @param plate
+	 * @return
+	 */
+	public Vehicles findByPlate(String plate) {
+		return vehiclesByPlate.get(plate);
+	}
+	
+	/**
+	 * Return a vehicle by its id (null if not found)
+	 * @param id
+	 * @return
+	 */
+	public Vehicles findById(int id) {
+		return vehicleRegistry.stream()
+							  .filter(vehicle -> vehicle.getId() == id)
+							  .findFirst()
+							  .orElse(null);
+	}
+	
+	/**
+	 * Remove the vehicle from the list and from the registry of plates
+	 * @param vehicle
+	 */
+	public void removeVehicle(Vehicles vehicle) {
+		vehicleRegistry.remove(vehicle);
+		if (getPlate(vehicle) != null)	
+			vehiclesByPlate.remove(getPlate(vehicle));
+	}
+	
+	/**
 	 * Helper function to get a plate from vehicle
 	 * @param vehicle
 	 * @return
@@ -85,24 +116,6 @@ public class VehicleRegistry {
 
 	public List<Vehicles> getVehicleRegistry() {
 		return Collections.unmodifiableList(vehicleRegistry);
-	}
-
-	public Vehicles findById(int id) {
-		return vehicleRegistry.stream()
-							  .filter(vehicle -> vehicle.getId() == id)
-							  .findFirst()
-							  .orElse(null);
-	}
-
-	public Vehicles findByPlate(String plate) {
-		return vehiclesByPlate.get(plate);
-	}
-
-	public void removeVehicle(Vehicles vehicle) {
-		vehicleRegistry.remove(vehicle);
-		if (getPlate(vehicle) != null)
-			vehiclesByPlate.remove(getPlate(vehicle));
-		
 	}
 
 }

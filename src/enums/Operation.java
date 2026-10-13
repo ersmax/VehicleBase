@@ -1,7 +1,8 @@
 package enums;
 
+
 public enum Operation {
-	ADD("addVehicle"), 
+	ADD("addVehicle"),
 	DELETE("deleteVehicle"),
 	LIST("listVehicles"),
 	EXPORT("exportVehicles"),

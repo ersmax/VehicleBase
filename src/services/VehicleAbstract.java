@@ -4,13 +4,9 @@ import java.time.Year;
 import java.util.List;
 import java.util.Map;
 
-import exception.CustomException;
-import lombok.extern.slf4j.Slf4j;
 import models.Vehicles;
-import singleton.VehicleRegistry;
 import utils.Validation;
 
-@Slf4j
 public abstract class VehicleAbstract {
 
 	public static final List<String> FUEL_TYPES = List.of("petrol", "diesel", "lpg", "methane", "electric", "hybrid", "manual");

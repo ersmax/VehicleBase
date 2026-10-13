@@ -1,7 +1,6 @@
 package utils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,24 +8,17 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class FileManager {
-	
-	/**
-	 * Both the BufferedReader and FileReader implements Autocloseable
-	 * so we can use try with resources to close automatically the file and stream
-	 * @param path
-	 * @return
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	public static List<String> readFile(String path) throws FileNotFoundException, IOException {
+
+	public static List<String> readFile(String path) throws IOException {
+		
 		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
 			Stream<String> streamBuilder = reader.lines();
 			return streamBuilder.filter(line -> !line.isBlank())
-								.filter(line -> !line.trim().startsWith("/"))
+								.filter(line -> !line.trim().startsWith("/"))		// drop comment lines
 								.toList();
+			}
 		}
-	}
-	
+
 	/**
 	 * Replace or add new rows to the File
 	 * @param path	: the file path where to write
@@ -46,3 +38,20 @@ public class FileManager {
 	}
 
 }
+
+
+
+
+// old method
+//public static List<String> readFile(String path) throws IOException {
+//	List<String> lines = new ArrayList<>();
+//	String line = null;
+//	try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+//		line = reader.readLine();
+//		while (line != null) {
+//			lines.add(line);
+//			line = reader.readLine();
+//		}
+//	}
+//	return lines;
+//}

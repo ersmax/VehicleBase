@@ -6,7 +6,7 @@ import java.util.Map;
 import exception.CustomException;
 
 public class Validation {
-	
+
 	/**
 	 * Search the whole attributes of vehicle, and return the correct one
 	 * @param parameters : the list of vehicle's attribute and their value
@@ -104,4 +104,16 @@ public class Validation {
 		return value;
 	}
 	
+	/**
+	 * Return the name of the class (e.g. car, implementation = CarImplementation)
+	 * @param name
+	 * @return
+	 */
+	public static String buildClassName(String prefix, String suffix) {
+		return 	  prefix.substring(0, 1).toUpperCase()
+				+ prefix.substring(1).toLowerCase()
+				+ suffix.substring(0, 1).toUpperCase()
+				+ suffix.substring(1).toLowerCase();
+	}
+
 }

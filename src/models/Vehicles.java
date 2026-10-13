@@ -10,13 +10,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, 	// make Jackson write the type name of each object into the JSON as a type field
 			  include = JsonTypeInfo.As.EXISTING_PROPERTY,
 			  property = "vehicleType",
-			  visible = true)
+			  visible = true)		
 @JsonSubTypes({
-	@JsonSubTypes.Type(value = Car.class, 	  name = "car"),
-	@JsonSubTypes.Type(value = Bike.class, 	  name = "bike"),
+	@JsonSubTypes.Type(value = Car.class,     name = "car"),		// maps each name to its class, so on import type:car becomes new Car()
+	@JsonSubTypes.Type(value = Bike.class,    name = "bike"),
 	@JsonSubTypes.Type(value = Bicycle.class, name = "bicycle")
 })
 public class Vehicles {

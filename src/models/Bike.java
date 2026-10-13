@@ -10,6 +10,5 @@ import lombok.ToString;
 public class Bike extends Vehicles {
 
 	private String plate;
-	private Integer cc;	
-	
+	private Integer cc;
 }
